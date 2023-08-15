@@ -1,4 +1,7 @@
 package com.varenie.homebar.view.menu
 
-class MenuScreen {
+import androidx.compose.runtime.Composable
+
+@Composable
+fun MenuScreen() {
 }

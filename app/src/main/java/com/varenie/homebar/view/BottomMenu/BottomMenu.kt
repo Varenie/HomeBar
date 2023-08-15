@@ -1,4 +1,4 @@
-package com.varenie.homebar.view.navigation
+package com.varenie.homebar.view.BottomMenu
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,8 +23,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.varenie.homebar.R
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.varenie.homebar.model.BottomNavContent
+import com.varenie.homebar.view.menu.MenuScreen
 import com.varenie.homebar.view.theme.PurpleGrey40
 
 @Composable
@@ -37,6 +38,7 @@ fun BottomMenu(
     initialSelectedItemIndex: Int = 1
 ) {
     var selectedItemIndex by remember { mutableStateOf(initialSelectedItemIndex) }
+    val viewModel: BottomMenuViewModel = hiltViewModel()
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically,
@@ -54,6 +56,11 @@ fun BottomMenu(
                 inactiveTextColor = inactiveTextColor
             ) {
                 selectedItemIndex = index
+                when(it) {
+                    "Menu" -> viewModel.onNavigateToMenu()
+                    "Bar" -> viewModel.onNavigateToBar()
+                    "Cart" -> viewModel.onNavigateToCart()
+                }
             }
         }
     }
@@ -66,13 +73,13 @@ fun BottomMenuItem(
     activeHighlightColor: Color = Color.White,
     activeTextColor: Color = Color.Black,
     inactiveTextColor: Color = Color.White,
-    onItemClick: () -> Unit
+    onItemClick: (String) -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.clickable {
-            onItemClick()
+            onItemClick(item.title)
         }
     ) {
         Box(
