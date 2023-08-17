@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.varenie.homebar.view.bar.BarScreen
+import com.varenie.homebar.view.navigation.NavigationTree
 import com.varenie.homebar.view.theme.HomeBarTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,7 +15,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             HomeBarTheme {
                 // A surface container using the 'background' color from the theme
-                BarScreen()
+                NavigationTree()
             }
         }
     }

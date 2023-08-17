@@ -39,12 +39,15 @@ fun NavigationTree() {
                 startDestination = Destination.BarScreen
             ) {
                 composable(destination = Destination.BarScreen) {
+                    println("test1")
                     BarScreen()
                 }
                 composable(destination = Destination.MenuScreen) {
+                    println("test2")
                     MenuScreen()
                 }
                 composable(destination = Destination.CartScreen) {
+                    println("test3")
                     CartScreen()
                 }
             }

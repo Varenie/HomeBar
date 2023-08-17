@@ -10,7 +10,9 @@ import javax.inject.Inject
 class BottomMenuViewModel @Inject constructor(
     private val appNavigator: AppNavigator
 ): ViewModel() {
-    fun onNavigateToMenu() { appNavigator.tryNavigateTo(Destination.MenuScreen())}
+    fun onNavigateToMenu() {
+        appNavigator.tryNavigateTo(Destination.MenuScreen())
+    }
     fun onNavigateToBar() { appNavigator.tryNavigateTo(Destination.BarScreen())}
     fun onNavigateToCart() { appNavigator.tryNavigateTo(Destination.CartScreen())}
 }
