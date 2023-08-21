@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -26,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -35,19 +37,26 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.varenie.homebar.R
 import com.varenie.homebar.model.AlcoType
-import com.varenie.homebar.model.BarItemContent
 import com.varenie.homebar.model.BottomNavContent
 import com.varenie.homebar.view.BottomMenu.BottomMenu
 import com.varenie.homebar.view.theme.Purple40
+import com.varenie.homebar.viewmodels.bar.BarEvent
+import com.varenie.homebar.viewmodels.bar.BarViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun BarScreen() {
     val showDialog = remember { mutableStateOf(false) }
+    val viewModel: BarViewModel = hiltViewModel()
+    viewModel.onEvent(BarEvent.InitViewModel)
+
+    val barList = viewModel.barItems.collectAsState()
     Scaffold(
         modifier = Modifier
             .background(Purple40)
@@ -62,17 +71,20 @@ fun BarScreen() {
         content = {
             val p = it
             BarList(
-                listOf(
-                    BarItemContent("Jim Beam", AlcoType.BOURBON, 500),
-                    BarItemContent("Jemeson", AlcoType.WHISKEY, 200),
-                    BarItemContent("Parka", AlcoType.VODKA, 700),
-                    BarItemContent("Barister", AlcoType.GIN, 100),
-                )
+                barList.value
             )
             if (showDialog.value) {
-                OpenDialog() {
-                    showDialog.value = false
-                }
+                OpenDialog(
+                    onConfirm = { name: String, type: AlcoType, volume: Int ->
+                        viewModel.onEvent(BarEvent.SaveBarItem(name, type, volume))
+                        if (viewModel.confirmVisible.value) {
+                            showDialog.value = false
+                        }
+                    },
+                    onDismiss = {
+                        showDialog.value = false
+                    }
+                )
             }
         },
         bottomBar = {
@@ -89,7 +101,7 @@ fun BarScreen() {
 
 @Composable
 private fun OpenDialog(
-//    onConfirm: () -> Unit
+    onConfirm: (String, AlcoType, Int) -> Unit,
     onDismiss: () -> Unit
 ) {
     val alcName = remember { mutableStateOf("") }
@@ -97,13 +109,21 @@ private fun OpenDialog(
     val volume = remember { mutableStateOf(0) }
 
     AlertDialog(
-        title = { Text(text = "abra") },
+        title = { Text(text = stringResource(id = R.string.bar_dialog_title)) },
         text = {
             AddDialogContent(alcName, alcType, volume)
         },
         onDismissRequest = { onDismiss() },
         confirmButton = {
-            Button(onClick = { onDismiss() }) {
+            Button(
+                onClick = {
+                    onConfirm(
+                        alcName.value,
+                        alcType.value,
+                        volume.value
+                    )
+                }
+            ) {
                 Text(text = "Confirm")
             }
         },
@@ -127,20 +147,30 @@ fun AddDialogContent(
             value = alcName.value,
             onValueChange = {
                 alcName.value = it
-            }
+            },
+            modifier = Modifier
+                .padding(5.dp),
+            label = { Text(text = stringResource(id = R.string.alco_name))}
         )
         DropDownMenuParameter(
             optionList = alcTypeArray,
-            label = stringResource(id = R.string.typeField)
+            label = stringResource(id = R.string.typeField),
         ) {
             alcType.value = AlcoType.valueOf(it)
         }
         TextField(
             value = volume.value.toString(),
             onValueChange = {
-                volume.value = it.toInt()
+                if (it.isEmpty()) {
+                    volume.value = 0
+                } else {
+                    volume.value = it.toInt()
+                }
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            modifier = Modifier
+                .padding(5.dp),
+            label = { Text(text = stringResource(id = R.string.volume))}
         )
     }
 }
@@ -159,7 +189,10 @@ fun DropDownMenuParameter(optionList: List<String>, label:String, onParamValueCh
         Icons.Filled.KeyboardArrowDown
 
 
-    Column() {
+    Column(
+        modifier = Modifier
+            .padding(5.dp)
+    ) {
         OutlinedTextField(
             value = selectedText.value,
             onValueChange = { selectedText.value = it },

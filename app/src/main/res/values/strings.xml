@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">HomeBar</string>
     <string name="typeField">Тип алкоголя</string>
+    <string name="volume">Объем (мл)</string>
+    <string name="alco_name">Название</string>
+    <string name="bar_dialog_title">Добавить напиток</string>
 </resources>

@@ -25,8 +25,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.varenie.homebar.model.BottomNavContent
-import com.varenie.homebar.view.menu.MenuScreen
 import com.varenie.homebar.view.theme.PurpleGrey40
+import com.varenie.homebar.viewmodels.BottomMenuViewModel
 
 @Composable
 fun BottomMenu(

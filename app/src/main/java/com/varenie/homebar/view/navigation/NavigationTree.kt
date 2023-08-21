@@ -15,6 +15,7 @@ import com.varenie.homebar.view.cart.CartScreen
 import com.varenie.homebar.view.menu.MenuScreen
 import com.varenie.homebar.view.theme.HomeBarTheme
 import com.varenie.homebar.view.theme.Purple40
+import com.varenie.homebar.viewmodels.NavigationViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 

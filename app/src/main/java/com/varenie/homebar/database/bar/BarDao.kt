@@ -7,8 +7,8 @@ import androidx.room.Query
 @Dao
 interface BarDao {
     @Insert
-    fun insertAll(vararg barItems: BarEntity)
+    suspend fun insertAll(vararg barItems: BarEntity)
 
     @Query("SELECT * FROM BarEntity")
-    fun getAll(): List<BarEntity>
+    suspend fun getAll(): List<BarEntity>
 }

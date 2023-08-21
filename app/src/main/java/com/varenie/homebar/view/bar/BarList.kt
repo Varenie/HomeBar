@@ -30,12 +30,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.varenie.homebar.database.bar.BarEntity
 import com.varenie.homebar.model.BarItemContent
 import com.varenie.homebar.view.theme.Purple80
 
 @Composable
 fun BarList(
-    list: List<BarItemContent>,
+    list: List<BarEntity>,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -52,7 +53,7 @@ fun BarList(
 
 @Composable
 fun BarItem(
-    item: BarItemContent,
+    item: BarEntity,
     modifier: Modifier = Modifier,
 ) {
     BoxWithConstraints(

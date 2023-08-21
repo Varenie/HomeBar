@@ -1,4 +1,4 @@
-package com.varenie.homebar.view.navigation
+package com.varenie.homebar.viewmodels
 
 import androidx.lifecycle.ViewModel
 import com.varenie.homebar.view.navigation.AppNavigator
