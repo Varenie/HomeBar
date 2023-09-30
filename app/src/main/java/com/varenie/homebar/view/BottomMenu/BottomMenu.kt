@@ -24,13 +24,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.varenie.homebar.R
 import com.varenie.homebar.model.BottomNavContent
 import com.varenie.homebar.view.theme.PurpleGrey40
 import com.varenie.homebar.viewmodels.BottomMenuViewModel
 
 @Composable
 fun BottomMenu(
-    items: List<BottomNavContent>,
     modifier: Modifier = Modifier,
     activeHighlightColor: Color = Color.White,
     activeTextColor: Color = Color.Black,
@@ -39,6 +39,13 @@ fun BottomMenu(
 ) {
     var selectedItemIndex by remember { mutableStateOf(initialSelectedItemIndex) }
     val viewModel: BottomMenuViewModel = hiltViewModel()
+
+    val items = listOf(
+    BottomNavContent("Menu", R.drawable.ic_menu),
+    BottomNavContent("Bar", R.drawable.ic_bar_inventory),
+    BottomNavContent("Cart", R.drawable.ic_cart)
+    )
+
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically,

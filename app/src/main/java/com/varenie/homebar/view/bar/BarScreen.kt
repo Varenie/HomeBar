@@ -4,6 +4,7 @@ package com.varenie.homebar.view.bar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +31,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -57,46 +59,37 @@ fun BarScreen() {
     viewModel.onEvent(BarEvent.InitViewModel)
 
     val barList = viewModel.barItems.collectAsState()
-    Scaffold(
+    Box(
         modifier = Modifier
             .background(Purple40)
-            .fillMaxSize(),
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { showDialog.value = true }
-            ) {
-                Icon(Icons.Filled.Add, "")
-            }
-        },
-        content = {
-            val p = it
-            BarList(
-                barList.value
-            )
-            if (showDialog.value) {
-                OpenDialog(
-                    onConfirm = { name: String, type: AlcoType, volume: Int ->
-                        viewModel.onEvent(BarEvent.SaveBarItem(name, type, volume))
-                        if (viewModel.confirmVisible.value) {
-                            showDialog.value = false
-                        }
-                    },
-                    onDismiss = {
+            .fillMaxSize()
+    ) {
+        BarList(
+            barList.value
+        )
+        if (showDialog.value) {
+            OpenDialog(
+                onConfirm = { name: String, type: AlcoType, volume: Int ->
+                    viewModel.onEvent(BarEvent.SaveBarItem(name, type, volume))
+                    if (viewModel.confirmVisible.value) {
                         showDialog.value = false
                     }
-                )
-            }
-        },
-        bottomBar = {
-            BottomMenu(
-                listOf(
-                    BottomNavContent("Menu", R.drawable.ic_menu),
-                    BottomNavContent("Bar", R.drawable.ic_bar_inventory),
-                    BottomNavContent("Cart", R.drawable.ic_cart)
-                )
+                },
+                onDismiss = {
+                    showDialog.value = false
+                }
             )
         }
-    )
+
+        FloatingActionButton(
+            modifier = Modifier
+                .padding(16.dp)
+                .align(Alignment.BottomEnd),
+            onClick = { showDialog.value = true }
+        ) {
+            Icon(Icons.Filled.Add, "")
+        }
+    }
 }
 
 @Composable
