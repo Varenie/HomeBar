@@ -23,7 +23,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -38,20 +37,15 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.varenie.homebar.R
 import com.varenie.homebar.model.AlcoType
-import com.varenie.homebar.model.BottomNavContent
-import com.varenie.homebar.view.BottomMenu.BottomMenu
 import com.varenie.homebar.view.theme.Purple40
 import com.varenie.homebar.viewmodels.bar.BarEvent
 import com.varenie.homebar.viewmodels.bar.BarViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
 fun BarScreen() {
     val showDialog = remember { mutableStateOf(false) }

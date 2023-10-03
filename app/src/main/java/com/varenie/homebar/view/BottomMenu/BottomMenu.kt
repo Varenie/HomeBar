@@ -85,9 +85,9 @@ fun BottomMenuItem(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.clickable {
-            onItemClick(item.title)
-        }
+//        modifier = Modifier.clickable {
+//
+//        }
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -95,6 +95,9 @@ fun BottomMenuItem(
                 .clip(RoundedCornerShape(10.dp))
                 .background(if (isSelected) activeHighlightColor else Color.Black)
                 .padding(10.dp)
+                .clickable {
+                    onItemClick(item.title)
+                }
         ) {
             Icon(
                 painter = painterResource(id = item.iconId),
