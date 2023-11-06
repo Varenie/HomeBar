@@ -26,16 +26,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.varenie.homebar.R
 import com.varenie.homebar.database.menu.MenuEntity
 import com.varenie.homebar.model.AlcoType
 import com.varenie.homebar.view.theme.Purple40
 import com.varenie.homebar.view.theme.Purple80
+import com.varenie.homebar.viewmodels.menu.MenuViewModel
 
 @Composable
 fun MenuScreen() {
     val showDialog = remember { mutableStateOf(false) }
-
+    val viewModel: MenuViewModel = hiltViewModel()
     Box {
         Column(
             modifier = Modifier
@@ -59,7 +61,7 @@ fun MenuScreen() {
                         .clip(RoundedCornerShape(10.dp))
                         .background(Purple80)
                         .weight(0.5f)
-                        .clickable {  },
+                        .clickable { },
                 )
 
                 Text(
@@ -72,7 +74,7 @@ fun MenuScreen() {
                         .clip(RoundedCornerShape(10.dp))
                         .background(Purple80)
                         .weight(0.5f)
-                        .clickable {  },
+                        .clickable { },
                 )
             }
             MenuList(list = testList)
@@ -82,7 +84,7 @@ fun MenuScreen() {
             modifier = Modifier
                 .padding(16.dp)
                 .align(Alignment.BottomEnd),
-            onClick = { showDialog.value = true }
+            onClick = { viewModel.navigateToAdd() }
         ) {
             Icon(Icons.Filled.Add, "")
         }

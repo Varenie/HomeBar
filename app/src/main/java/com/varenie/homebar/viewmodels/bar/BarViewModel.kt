@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.varenie.homebar.database.AppDatabase
 import com.varenie.homebar.database.bar.BarEntity
 import com.varenie.homebar.model.AlcoType
-import com.varenie.homebar.view.navigation.AppNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +15,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BarViewModel @Inject constructor(
-    private val appNavigator: AppNavigator,
     private val database: AppDatabase
 ): ViewModel() {
     private val _barItems: MutableStateFlow<ArrayList<BarEntity>> = MutableStateFlow(arrayListOf())

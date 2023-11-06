@@ -14,6 +14,8 @@ sealed class Destination(protected val route: String, vararg params: String) {
     object BarScreen: NoArgumentsDestination("bar")
     object MenuScreen: NoArgumentsDestination("menu")
     object CartScreen: NoArgumentsDestination("cart")
+
+    object AddCocktail: NoArgumentsDestination("addDialog")
 }
 
 internal fun String.appendParams(vararg params: Pair<String, Any>): String {

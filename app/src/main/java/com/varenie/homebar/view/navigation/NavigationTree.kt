@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.varenie.homebar.view.addcocktail.AddCocktailScreen
 import com.varenie.homebar.view.bar.BarScreen
 import com.varenie.homebar.view.cart.CartScreen
 import com.varenie.homebar.view.menu.MenuScreen
@@ -40,16 +41,16 @@ fun NavigationTree() {
                 startDestination = Destination.BarScreen
             ) {
                 composable(destination = Destination.BarScreen) {
-                    println("test1")
                     BarScreen()
                 }
                 composable(destination = Destination.MenuScreen) {
-                    println("test2")
                     MenuScreen()
                 }
                 composable(destination = Destination.CartScreen) {
-                    println("test3")
                     CartScreen()
+                }
+                composable(destination = Destination.AddCocktail) {
+                    AddCocktailScreen()
                 }
             }
         }
